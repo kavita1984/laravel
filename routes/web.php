@@ -23,3 +23,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/all/user', 'HomeController@allUser')->name('allUser');
 Route::get('/all/categories', 'HomeController@allCategories')->name('allCategories');
+
+Route::get('/manage/categories', 'HomeController@manageCategories')->name('manageCategories');
+Route::get('/add/categories', 'HomeController@addCategory')->name('addCategory');
+Route::get('/edit/categories/{id}', 'HomeController@addCategory')->name('editCategory');
+Route::post('/add/categories', 'HomeController@addCategory')->name('addCategory');
+
+Route::get('/delete/categories/{id}', 'HomeController@deleteCategory')->name('deleteCategory');

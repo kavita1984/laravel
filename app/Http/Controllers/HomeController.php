@@ -47,4 +47,54 @@ class HomeController extends Controller
         $allCategories = Categorie::with('subCategories')->get();
         return view('allCategories',compact('allCategories'));
     }
+    public function manageCategories()
+    {
+        if(auth::user()->role>0)
+        {
+            return redirect()->back();
+        }
+        $allCategories = Categorie::orderBy('categories.id','DESC')->get();
+        return view('manageCategories',compact('allCategories'));
+    }
+    public function addCategory(Request $request,$id=0)
+    {
+        if(auth::user()->role>0)
+        {
+            return redirect()->back();
+        }
+        if($request->isMethod('post')) 
+        {
+            $message = 'added';
+            if($request->category_id>0)
+            {
+                $message = 'updated';
+                $Category = Categorie::find($request->category_id);
+            }
+            else
+            {
+                $Category = new Categorie();
+            }
+            $Category->category_name = $request->category;
+            $Category->save();
+
+            Session::flash('message', "Category $message successfully!"); 
+            return redirect()->route('manageCategories');
+        }
+        $categories = Categorie::find($id);
+        return view('addCategory',compact('categories'));
+    }
+    public function deleteCategory($id=0)
+    {
+        if(auth::user()->role>0)
+        {
+            return redirect()->back();
+        }
+        $categories = Categorie::find($id);
+        if($categories!='')
+        {
+            $categories->delete();
+            Session::flash('message', "Category deleted successfully!"); 
+        }
+        return redirect()->route('manageCategories');
+    }
 }
