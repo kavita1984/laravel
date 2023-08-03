@@ -28,5 +28,11 @@ Route::get('/manage/categories', 'HomeController@manageCategories')->name('manag
 Route::get('/add/categories', 'HomeController@addCategory')->name('addCategory');
 Route::get('/edit/categories/{id}', 'HomeController@addCategory')->name('editCategory');
 Route::post('/add/categories', 'HomeController@addCategory')->name('addCategory');
-
 Route::get('/delete/categories/{id}', 'HomeController@deleteCategory')->name('deleteCategory');
+
+Route::get('/manage/sub/categories', 'HomeController@manageSubCategories')->name('manageSubCategories');
+Route::get('/add/sub/categories', 'HomeController@addSubCategory')->name('addSubCategory');
+Route::get('/edit/sub/categories/{id}', 'HomeController@addSubCategory')->name('editSubCategory');
+Route::post('/add/sub/categories', 'HomeController@addSubCategory')->name('addSubCategory');
+
+Route::get('/delete/sub/categories/{id}', 'HomeController@deleteSubCategory')->name('deleteSubCategory');

@@ -48,6 +48,9 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('manageCategories') }}">{{ __('Manage Categories') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('manageSubCategories') }}">{{ __('Manage Sub Categories') }}</a>
                             </li> 
                         @endif
                         @guest

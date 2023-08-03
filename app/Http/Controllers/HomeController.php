@@ -97,4 +97,59 @@ class HomeController extends Controller
         }
         return redirect()->route('manageCategories');
     }
+    public function manageSubCategories()
+    {
+        if(auth::user()->role>0)
+        {
+            return redirect()->back();
+        }
+        $allCategories = SubCategorie::join('categories','categories.id','sub_categories.category_id')
+            ->orderBy('sub_categories.id','DESC')
+            ->select('sub_categories.*','categories.category_name')
+            ->get();
+        return view('manageSubCategories',compact('allCategories'));
+    }
+    public function addSubCategory(Request $request,$id=0)
+    {
+        if(auth::user()->role>0)
+        {
+            return redirect()->back();
+        }
+        if($request->isMethod('post')) 
+        {
+            $message = 'added';
+            if($request->sub_category_id>0)
+            {
+                $message = 'updated';
+                $Category = SubCategorie::find($request->sub_category_id);
+            }
+            else
+            {
+                $Category = new SubCategorie();
+            }
+            $Category->category_id = $request->category;
+            $Category->sub_category_name = $request->sub_category;
+            $Category->save();
+
+            Session::flash('message', "Sub category $message successfully!"); 
+            return redirect()->route('manageSubCategories');
+        }
+        $categories = Categorie::get();
+        $subCategories = SubCategorie::find($id);
+        return view('addSubCategory',compact('categories','subCategories'));
+    }
+    public function deleteSubCategory($id=0)
+    {
+        if(auth::user()->role>0)
+        {
+            return redirect()->back();
+        }
+        $categories = SubCategorie::find($id);
+        if($categories!='')
+        {
+            $categories->delete();
+            Session::flash('message', "Sub category deleted successfully!"); 
+        }
+        return redirect()->route('manageSubCategories');
+    }
 }
