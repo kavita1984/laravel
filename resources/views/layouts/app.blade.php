@@ -39,6 +39,14 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
+                        @if(auth::check() && auth::user()->role==0)
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('allUser') }}">{{ __('All Users') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('allCategories') }}">{{ __('All Categories') }}</a>
+                            </li> 
+                        @endif
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>

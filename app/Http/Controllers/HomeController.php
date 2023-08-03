@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use auth;
+use App\User;
+use App\Categorie;
+use App\SubCategorie;
+use Session;
 class HomeController extends Controller
 {
     /**
@@ -24,5 +28,23 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+    public function allUser()
+    {
+        if(auth::user()->role>0)
+        {
+            return redirect()->back();
+        }
+        $allUser = User::where('role',1)->get();
+        return view('allUser',compact('allUser'));
+    }
+    public function allCategories()
+    {
+        if(auth::user()->role>0)
+        {
+            return redirect()->back();
+        }
+        $allCategories = Categorie::with('subCategories')->get();
+        return view('allCategories',compact('allCategories'));
     }
 }
